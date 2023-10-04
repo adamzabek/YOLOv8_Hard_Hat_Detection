@@ -28,7 +28,7 @@ IMAGES_DIR = ROOT / 'images'
 VIDEO_DIR = ROOT / 'videos'
 
 # ML Model config
-MODEL_DIR = ROOT / 'weights'
+MODEL_DIR = ROOT / 'model'
 DETECTION_MODEL = MODEL_DIR / 'best.pt'
 
 # Webcam

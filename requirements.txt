@@ -1,5 +1,4 @@
 Pillow
-sys
 pandas
 numpy
 streamlit
