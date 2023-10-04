@@ -32,4 +32,4 @@ MODEL_DIR = ROOT / 'model'
 DETECTION_MODEL = MODEL_DIR / 'best.pt'
 
 # Webcam
-WEBCAM_PATH = -1
+WEBCAM_PATH = 2
