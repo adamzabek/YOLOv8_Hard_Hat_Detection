@@ -15,17 +15,17 @@ if root_path not in sys.path:
 ROOT = root_path.relative_to(Path.cwd())
 
 # Sources
-IMAGE = 'Image'
-VIDEO = 'Video'
+#IMAGE = 'Image'
+#VIDEO = 'Video'
 WEBCAM = 'Webcam'
 
-SOURCES_LIST = [IMAGE, VIDEO, WEBCAM]
+#SOURCES_LIST = [IMAGE, VIDEO, WEBCAM]
 
 # Images config
-IMAGES_DIR = ROOT / 'images'
+#IMAGES_DIR = ROOT / 'images'
 
 # Videos config
-VIDEO_DIR = ROOT / 'videos'
+#VIDEO_DIR = ROOT / 'videos'
 
 # ML Model config
 MODEL_DIR = ROOT / 'model'

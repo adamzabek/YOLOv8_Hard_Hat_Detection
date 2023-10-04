@@ -99,9 +99,9 @@ def play_webcam(conf, model):
         except Exception as e:
             st.sidebar.error("Error loading video: " + str(e))
 
-
+"""
 def play_stored_video(conf, model):
-    """
+    
     Plays a stored video file. Tracks and detects objects in real-time using the YOLOv8 object detection model.
 
     Parameters:
@@ -113,7 +113,7 @@ def play_stored_video(conf, model):
 
     Raises:
         None
-    """
+    
     source_vid = st.sidebar.selectbox(
         "Choose a video...", settings.VIDEOS_DICT.keys())
 
@@ -144,3 +144,4 @@ def play_stored_video(conf, model):
                     break
         except Exception as e:
             st.sidebar.error("Error loading video: " + str(e))
+"""            
