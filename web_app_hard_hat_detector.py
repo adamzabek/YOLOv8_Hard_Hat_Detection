@@ -75,8 +75,8 @@ except Exception as ex:
 #
 #elif source_radio == settings.WEBCAM:
 #    helper.play_webcam(confidence, model)
-if source_radio == settings.WEBCAM:
-    helper.play_webcam(confidence, model)
+
+helper.play_webcam(confidence, model)
     
-else:
-    st.error("Please select a valid source type!")
+#else:
+#    st.error("Please select a valid source type!")
