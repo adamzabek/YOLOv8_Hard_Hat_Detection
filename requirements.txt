@@ -4,5 +4,4 @@ numpy
 streamlit
 scikit-learn
 ultralytics
-time
 opencv-python
