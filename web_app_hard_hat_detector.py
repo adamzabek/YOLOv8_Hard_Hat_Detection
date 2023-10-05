@@ -39,31 +39,6 @@ html_code = """
     }
     setupWebcam();
 
-    // Load YOLO model (replace 'modelPath' with your model's URL)
-    const modelPath = model_path;
-    let model;
-
-    async function loadModel() {
-        model = await tf.loadGraphModel(modelPath + 'model.json');
-    }
-    loadModel();
-
-    // Function to run object detection
-    async function runObjectDetection() {
-        while (true) {
-            await tf.nextFrame();
-            const img = tf.browser.fromPixels(video);
-            const resized = tf.image.resizeBilinear(img, [416, 416]);
-            const casted = resized.cast('float32');
-            const expanded = casted.expandDims(0);
-            const predictions = await model.predict(expanded);
-
-            // Process predictions and draw bounding boxes
-            // You'll need to implement this part based on your model
-            // For simplicity, consider using tfjs-yolo-tiny or similar libraries for YOLO detection
-        }
-    }
-    runObjectDetection();
 </script>
 """
 
