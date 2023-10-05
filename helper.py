@@ -160,11 +160,11 @@ def webcam(conf, model):
         ret, frame = cap.read()            
             
         if ret:
-            detected_frame = model.track(frame, show=True, tracker="bytetrack.yaml")
+            detected_frame = model.track(source = frame, persist=True, tracker="bytetrack.yaml")
 
             # Display the result in Streamlit
             webrtc_ctx.video_receiver.process_frame(detected_frame)
-            st.image(detected_frame, channels="BGR", use_column_width=True)            
+            st.image(detected_frame, channels="BGR")            
             
             #if ret:
             #    webrtc_ctx.video_receiver.process_frame(frame)
