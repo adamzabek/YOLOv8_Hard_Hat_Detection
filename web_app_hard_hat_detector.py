@@ -13,22 +13,24 @@ st.title("Real-Time YOLO Object Detection in Streamlit")
 
 # HTML code to access webcam and display video
 html_code = """
-<video id="webcam" width="960" height="320" autoplay></video>
-<canvas id="output" width="960" height="320"></canvas>
+<video id="webcam" width="100%" height="100%" autoplay></video>
 <style>
-    #webcam {
-        width: auto;
-        height: auto;
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
     }
-    #output {
-        width: auto;
-        height: auto;
+    #webcam {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 </style>
 <script>
     const video = document.getElementById('webcam');
-    const canvas = document.getElementById('output');
-    const ctx = canvas.getContext('2d');
 
     // Initialize webcam
     async function setupWebcam() {
