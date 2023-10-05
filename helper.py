@@ -160,9 +160,14 @@ def webcam(conf, model):
             # Read frame from IP camera
             ret, frame = cap.read()            
             
-            if ret:
-                webrtc_ctx.video_receiver.process_frame(frame)
-                st.image(frame, channels="BGR")
+            detected_frame = model.track(frame)
+
+            # Display the result in Streamlit
+            st.image(detected_frame, channels="BGR", use_column_width=True)            
+            
+            #if ret:
+            #    webrtc_ctx.video_receiver.process_frame(frame)
+            #    st.image(frame, channels="BGR")
             
         # Release the VideoCapture object and cleanup
         cap.release()
