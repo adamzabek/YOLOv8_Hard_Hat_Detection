@@ -98,7 +98,7 @@ def play_webcam(conf, model):
     except Exception as e:
         st.sidebar.error("Error loading video: " + str(e))
 
-def webcam(conf, model):
+def webcam_old(conf, model):
     
     is_display_tracker, tracker = display_tracker_options()
     
@@ -131,6 +131,50 @@ def webcam(conf, model):
                                          is_display_detected_frames,
                                          tracker,
                                          )
+            
+        # Release the VideoCapture object and cleanup
+        cap.release()
+        cv2.destroyAllWindows()
+        
+def webcam(conf, model):
+    
+    tracker = cv2.TrackerKCF_create()
+    
+    webrtc_ctx = webrtc_streamer(
+        key="object_detection", 
+        video_processor_factory=None,
+        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+        media_stream_constraints={
+            "video": True,
+            "audio": False
+        }
+    )
+
+    if webrtc_ctx.video_receiver:
+        # Initialize the VideoCapture object for IP camera
+        cap = cv2.VideoCapture(settings.WEBCAM_PATH)
+
+        while True:
+            # Read frame from IP camera
+            ret, frame = cap.read()
+
+            # Display the frame in Streamlit
+            if ret:
+                # Loop through detected objects and start tracking
+                for bbox in bboxes:
+                    x, y, w, h = bbox
+                    tracker.init(frame, (x, y, w, h))
+
+                # Update object tracker
+                ok, bboxes = tracker.update(frame)
+
+                # Draw bounding boxes on the frame
+                for new_bbox in bboxes:
+                    x, y, w, h = [int(coord) for coord in new_bbox]
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)                
+            
+                webrtc_ctx.video_receiver.process_frame(frame)
+                st.image(frame, channels="BGR")
             
         # Release the VideoCapture object and cleanup
         cap.release()
