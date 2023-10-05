@@ -4,6 +4,8 @@ import streamlit as st
 import cv2
 
 import settings
+from streamlit_webrtc import WebRtcMode, webrtc_streamer
+
 
 def load_model(model_path):
     """
