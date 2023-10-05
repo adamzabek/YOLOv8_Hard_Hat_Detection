@@ -122,8 +122,8 @@ def webcam(conf, model):
 
             # Display the frame in Streamlit
             if ret:
-                #webrtc_ctx.video_receiver.process_frame(frame)
-                #st.image(frame, channels="BGR")
+                webrtc_ctx.video_receiver.process_frame(frame)
+                st.image(frame, channels="BGR")
                 _display_detected_frames(conf,
                                          model,
                                          st_frame,
