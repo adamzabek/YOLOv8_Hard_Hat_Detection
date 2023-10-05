@@ -18,11 +18,11 @@ html_code = """
 <style>
     #webcam {
         width: 100%;
-        height: auto;
+        height: 100%;
     }
     #output {
         width: 100%;
-        height: auto;
+        height: 100%;
     }
 </style>
 <script>
