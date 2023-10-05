@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 from pathlib import Path
+import settings
 
 # Load YOLO model
 model_path = Path(settings.DETECTION_MODEL)
