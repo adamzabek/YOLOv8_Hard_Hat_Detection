@@ -163,6 +163,7 @@ def webcam(conf, model):
             detected_frame = model.track(frame)
 
             # Display the result in Streamlit
+            webrtc_ctx.video_receiver.process_frame(detected_frame)
             st.image(detected_frame, channels="BGR", use_column_width=True)            
             
             #if ret:
