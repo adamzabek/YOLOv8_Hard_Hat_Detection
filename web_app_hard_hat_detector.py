@@ -13,8 +13,8 @@ st.title("Real-Time YOLO Object Detection in Streamlit")
 
 # HTML code to access webcam and display video
 html_code = """
-<video id="webcam" width="640" height="480" autoplay></video>
-<canvas id="output" width="640" height="480"></canvas>
+<video id="webcam" width="720" height="960" autoplay></video>
+<canvas id="output" width="720" height="960"></canvas>
 <script>
     const video = document.getElementById('webcam');
     const canvas = document.getElementById('output');
