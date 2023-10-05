@@ -43,8 +43,10 @@ except Exception as ex:
     st.error(f"Unable to load model. Check the specified path: {model_path}.")
     st.error(ex)
     
-try:
-    helper.webcam(confidence, model)
+helper.webcam(confidence, model)
+    
+#try:
+#    helper.webcam(confidence, model)
 #except Exception as ex:
 #    st.error(f"Unable to run webcamera.")
 #    st.error(ex)
