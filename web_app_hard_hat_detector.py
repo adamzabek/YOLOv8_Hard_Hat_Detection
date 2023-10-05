@@ -17,12 +17,12 @@ html_code = """
 <canvas id="output" width="960" height="1024"></canvas>
 <style>
     #webcam {
-        width: 100%;
-        height: 100%;
+        width: auto%;
+        height: auto%;
     }
     #output {
-        width: 100%;
-        height: 100%;
+        width: auto%;
+        height: auto%;
     }
 </style>
 <script>
