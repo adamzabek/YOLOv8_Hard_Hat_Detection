@@ -40,7 +40,7 @@ st.title("Hard Hat Detector")
 
 st.markdown("<div class='Select Model Confidence'>Select Model Confidence</div>", unsafe_allow_html=True)
 
-confidence = float(st.slider(".", 25, 100, 40)) / 100
+confidence = float(st.slider("", 25, 100, 40)) / 100
     
 # Load Pre-trained ML Model
 model_path = Path(settings.DETECTION_MODEL)
