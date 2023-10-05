@@ -38,9 +38,11 @@ st.write(custom_css, unsafe_allow_html=True)
 
 st.title("Hard Hat Detector")
 
+st.write(custom_css, unsafe_allow_html=True)
+
 st.write("Select Model Confidence")
 
-confidence = float(st.slider( , 25, 100, 40)) / 100    
+confidence = float(st.slider( , 25, 100, 40)) / 100
     
 # Load Pre-trained ML Model
 model_path = Path(settings.DETECTION_MODEL)
