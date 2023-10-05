@@ -38,7 +38,17 @@ st.write(custom_css, unsafe_allow_html=True)
 
 st.title("Hard Hat Detector")
 
-st.markdown("<div class='Select Model Confidence'>Select Model Confidence</div>", unsafe_allow_html=True)
+next_custom_css = """
+<style>
+.centered-text {
+    text-align: center;
+}
+</style>
+"""
+
+st.write(next_custom_css, unsafe_allow_html=True)
+
+st.markdown("<div class='centered-text'>Select Model Confidence</div>", unsafe_allow_html=True)
 
 confidence = float(st.slider("", 25, 100, 40)) / 100
     
