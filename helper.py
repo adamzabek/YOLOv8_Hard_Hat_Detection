@@ -156,10 +156,10 @@ def webcam(conf, model):
         # Initialize the VideoCapture object for IP camera
         cap = cv2.VideoCapture(settings.WEBCAM_PATH)
 
-        while True:
-            # Read frame from IP camera
-            ret, frame = cap.read()            
+        # Read frame from IP camera
+        ret, frame = cap.read()            
             
+        if ret:
             detected_frame = model.track(frame)
 
             # Display the result in Streamlit
