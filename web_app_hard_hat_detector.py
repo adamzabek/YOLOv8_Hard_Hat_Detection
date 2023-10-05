@@ -37,7 +37,8 @@ model_path = Path(settings.DETECTION_MODEL)
 #model_path = './model/best.pt'
 
 try:
-    model = helper.load_model(model_path)
+    model = YOLO(model_path)
+    
 except Exception as ex:
     st.error(f"Unable to load model. Check the specified path: {model_path}.")
     st.error(ex)
