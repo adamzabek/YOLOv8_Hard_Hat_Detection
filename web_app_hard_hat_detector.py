@@ -38,7 +38,7 @@ st.write(custom_css, unsafe_allow_html=True)
 
 st.title("Hard Hat Detector")
 
-next_custom_css = """
+custom_css = """
 <style>
 .centered-text {
     text-align: center;
@@ -46,7 +46,7 @@ next_custom_css = """
 </style>
 """
 
-st.write(next_custom_css, unsafe_allow_html=True)
+st.write(custom_css, unsafe_allow_html=True)
 
 st.markdown("<div class='centered-text'>Select Model Confidence</div>", unsafe_allow_html=True)
 
