@@ -141,7 +141,7 @@ def webcam(conf, model):
     #tracker = cv2.TrackerKCF_create()
     
     webrtc_ctx = webrtc_streamer(
-        key="object_detection", 
+        key="example", 
         video_processor_factory=None,
         rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
         media_stream_constraints={
