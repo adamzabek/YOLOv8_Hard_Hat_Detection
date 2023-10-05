@@ -14,6 +14,7 @@ st.title("Real-Time YOLO Object Detection in Streamlit")
 # HTML code to access webcam and display video
 html_code = """
 <video id="webcam" width="100%" height="100%" autoplay></video>
+<button id="fullscreenButton">Toggle Fullscreen</button>
 <style>
     body {
         margin: 0;
@@ -31,6 +32,19 @@ html_code = """
 </style>
 <script>
     const video = document.getElementById('webcam');
+    const fullscreenButton = document.getElementById('fullscreenButton');
+
+    // Function to toggle fullscreen mode
+    function toggleFullscreen() {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        } else {
+            video.requestFullscreen()
+                .catch(err => {
+                    console.error('Error attempting to enable fullscreen:', err.message);
+                });
+        }
+    }
 
     // Initialize webcam
     async function setupWebcam() {
@@ -39,8 +53,10 @@ html_code = """
     }
     setupWebcam();
 
+    // Attach click event listener to the fullscreen button
+    fullscreenButton.addEventListener("click", toggleFullscreen);
 </script>
 """
 
-# Display the webcam and object detection canvas using HTML
+# Display the fullscreen webcam and object detection canvas using HTML and JavaScript
 st.components.v1.html(html_code)
