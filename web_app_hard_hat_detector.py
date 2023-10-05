@@ -5,6 +5,7 @@ from ultralytics import YOLO
 from pathlib import Path
 import settings
 import av
+from sample_utils.turn import get_ice_servers
 
 
 from streamlit_webrtc import WebRtcMode, webrtc_streamer
