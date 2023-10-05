@@ -6,9 +6,12 @@ from pathlib import Path
 import settings
 import av
 from turn import get_ice_servers
-
+import logging
+import queue
 
 from streamlit_webrtc import WebRtcMode, webrtc_streamer
+
+logger = logging.getLogger(__name__)
 
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     image = frame.to_ndarray(format="bgr24")
