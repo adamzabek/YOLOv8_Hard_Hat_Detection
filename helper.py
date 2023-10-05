@@ -40,12 +40,12 @@ def _display_detected_frames(conf, model, st_frame, image):
     #image = cv2.resize(image, (720, int(720*(9/16))))
 
     # Display object tracking, if specified
-    res = model.track(image, conf=conf, persist=True, tracker="bytetrack.yaml")
+    res = model.track(image, conf=conf, show=True, tracker="bytetrack.yaml")
 
     # Plot the detected objects on the video frame
-    res_plotted = res[0].plot()
-    webrtc_ctx.video_receiver.process_frame(res_plotted)
-    st_frame.image(res_plotted,
+    #res_plotted = res[0].plot()
+    webrtc_ctx.video_receiver.process_frame(res)
+    st_frame.image(res,
                    caption='Detected Video',
                    channels="BGR",
                    use_column_width=True
