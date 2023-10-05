@@ -21,16 +21,7 @@ def load_model(model_path):
     return model
 
 
-def display_tracker_options():
-    #display_tracker = st.radio("Display Tracker", ('Yes', 'No'))
-    is_display_tracker = True if display_tracker == 'Yes' else False
-    if is_display_tracker:
-        tracker_type = 'bytetrack.yaml'
-        return is_display_tracker, tracker_type
-    return is_display_tracker, tracker_type
-
-
-def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None, tracker=None):
+def _display_detected_frames(conf, model, st_frame, image):
     """
     Display the detected objects on a video frame using the YOLOv8 model.
 
@@ -49,11 +40,7 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=N
     image = cv2.resize(image, (720, int(720*(9/16))))
 
     # Display object tracking, if specified
-    if is_display_tracking:
-        res = model.track(image, conf=conf, persist=True, tracker=tracker)
-    else:
-        # Predict the objects in the image using the YOLOv8 model
-        res = model.predict(image, conf=conf)
+    res = model.track(image, conf=conf, persist=True, tracker="bytetrack.yaml")
 
     # # Plot the detected objects on the video frame
     res_plotted = res[0].plot()
@@ -64,7 +51,7 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=N
                    )
 
 
-def play_webcam(conf, model):
+def webcam(conf, model):
     """
     Plays a webcam stream. Detects Objects in real-time using the YOLOv8 object detection model.
 
@@ -78,34 +65,8 @@ def play_webcam(conf, model):
     Raises:
         None
     """
-    source_webcam = settings.WEBCAM_PATH
-    is_display_tracker, tracker = display_tracker_options()
-    #if st.sidebar.button('Detect Objects'):
-    try:
-        vid_cap = cv2.VideoCapture(source_webcam)
-        #st_frame = st.empty()
-        while (vid_cap.isOpened()):
-            success, image = vid_cap.read()
-            if success:
-                _display_detected_frames(conf,
-                                         model,
-                                         st_frame,
-                                         image,
-                                         is_display_tracker,
-                                         tracker,
-                                         )
-            else:
-                vid_cap.release()
-                break
-    except Exception as e:
-        st.sidebar.error("Error loading video: " + str(e))
-
-def webcam_old(conf, model):
-    
-    is_display_tracker, tracker = display_tracker_options()
-    
     webrtc_ctx = webrtc_streamer(
-        key="object_detection", 
+        key="example", 
         video_processor_factory=None,
         rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
         media_stream_constraints={
@@ -115,30 +76,20 @@ def webcam_old(conf, model):
     )
 
     if webrtc_ctx.video_receiver:
-        # Initialize the VideoCapture object for IP camera
-        cap = cv2.VideoCapture(settings.WEBCAM_PATH)
-
-        while True:
-            # Read frame from IP camera
-            ret, frame = cap.read()
-
-            # Display the frame in Streamlit
-            if ret:
-                webrtc_ctx.video_receiver.process_frame(frame)
-                st.image(frame, channels="BGR")
-                _display_detected_frames(conf,
-                                         model,
-                                         st_frame,
-                                         frame,
-                                         is_display_detected_frames,
-                                         tracker,
-                                         )
-            
-        # Release the VideoCapture object and cleanup
-        cap.release()
-        cv2.destroyAllWindows()
+        try:
+            vid_cap = cv2.VideoCapture(settings.WEBCAM_PATH)
+            st_frame = st.empty()
+            while (vid_cap.isOpened()):
+                success, image = vid_cap.read()
+                if success:
+                    _display_detected_frames(conf, model, st_frame, image)
+                else:
+                    vid_cap.release()
+                    break
+        except Exception as e:
+            st.sidebar.error("Error loading video: " + str(e))
         
-def webcam(conf, model):
+def play_webcam(conf, model):
     
     #tracker = cv2.TrackerKCF_create()
     
