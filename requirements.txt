@@ -6,3 +6,4 @@ streamlit_webrtc
 scikit-learn
 ultralytics
 opencv-python
+twilio
