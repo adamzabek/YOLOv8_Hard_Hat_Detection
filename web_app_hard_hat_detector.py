@@ -45,6 +45,6 @@ except Exception as ex:
     
 try:
     helper.webcam(confidence, model)
-except Exception as ex:
-    st.error(f"Unable to run webcamera.")
-    st.error(ex)
+#except Exception as ex:
+#    st.error(f"Unable to run webcamera.")
+#    st.error(ex)
