@@ -121,7 +121,8 @@ def play_webcam(conf, model):
             #res_plotted = results[0].plot()
             # Display the frame in a window
             #cv2.imshow('Camera Feed', res_plotted)
-
+            webrtc_ctx.video_receiver.process_frame(results)
+            
             # Break the loop if the 'q' key is pressed
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
