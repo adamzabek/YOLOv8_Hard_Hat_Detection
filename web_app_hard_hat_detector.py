@@ -29,7 +29,7 @@ webrtc_ctx = webrtc_streamer(
 
 if webrtc_ctx.video_receiver:
     # Initialize the VideoCapture object for IP camera
-    cap = cv2.VideoCapture("your_ip_camera_url")
+    cap = cv2.VideoCapture("0")
 
     while True:
         # Read frame from IP camera
