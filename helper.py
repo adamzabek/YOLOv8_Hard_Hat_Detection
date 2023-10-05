@@ -138,7 +138,7 @@ def webcam_old(conf, model):
         
 def webcam(conf, model):
     
-    tracker = cv2.TrackerKCF_create()
+    #tracker = cv2.TrackerKCF_create()
     
     webrtc_ctx = webrtc_streamer(
         key="object_detection", 
@@ -156,23 +156,9 @@ def webcam(conf, model):
 
         while True:
             # Read frame from IP camera
-            ret, frame = cap.read()
-
-            # Display the frame in Streamlit
-            if ret:
-                # Loop through detected objects and start tracking
-                for bbox in bboxes:
-                    x, y, w, h = bbox
-                    tracker.init(frame, (x, y, w, h))
-
-                # Update object tracker
-                ok, bboxes = tracker.update(frame)
-
-                # Draw bounding boxes on the frame
-                for new_bbox in bboxes:
-                    x, y, w, h = [int(coord) for coord in new_bbox]
-                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)                
+            ret, frame = cap.read()            
             
+            if ret:
                 webrtc_ctx.video_receiver.process_frame(frame)
                 st.image(frame, channels="BGR")
             
