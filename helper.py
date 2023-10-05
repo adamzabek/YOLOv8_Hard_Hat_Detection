@@ -20,76 +20,6 @@ def load_model(model_path):
     model = YOLO(model_path)
     return model
 
-
-def _display_detected_frames(conf, model, st_frame, image):
-    """
-    Display the detected objects on a video frame using the YOLOv8 model.
-
-    Args:
-    - conf (float): Confidence threshold for object detection.
-    - model (YoloV8): A YOLOv8 object detection model.
-    - st_frame (Streamlit object): A Streamlit object to display the detected video.
-    - image (numpy array): A numpy array representing the video frame.
-    - is_display_tracking (bool): A flag indicating whether to display object tracking (default=None).
-
-    Returns:
-    None
-    """
-
-    # Resize the image to a standard size
-    #image = cv2.resize(image, (720, int(720*(9/16))))
-
-    # Display object tracking, if specified
-    res = model.track(image, conf=conf, show=True, tracker="bytetrack.yaml")
-
-    # Plot the detected objects on the video frame
-    #res_plotted = res[0].plot()
-    webrtc_ctx.video_receiver.process_frame(res)
-    st_frame.image(res,
-                   caption='Detected Video',
-                   channels="BGR",
-                   use_column_width=True
-                   )
-
-
-def webcam(conf, model):
-    """
-    Plays a webcam stream. Detects Objects in real-time using the YOLOv8 object detection model.
-
-    Parameters:
-        conf: Confidence of YOLOv8 model.
-        model: An instance of the `YOLOv8` class containing the YOLOv8 model.
-
-    Returns:
-        None
-
-    Raises:
-        None
-    """
-    webrtc_ctx = webrtc_streamer(
-        key="example", 
-        video_processor_factory=None,
-        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-        media_stream_constraints={
-            "video": True,
-            "audio": False
-        }
-    )
-
-    if webrtc_ctx.video_receiver:
-        try:
-            vid_cap = cv2.VideoCapture(settings.WEBCAM_PATH)
-            st_frame = st.empty()
-            while (vid_cap.isOpened()):
-                success, image = vid_cap.read()
-                if success:
-                    _display_detected_frames(conf, model, st_frame, image)
-                else:
-                    vid_cap.release()
-                    break
-        except Exception as e:
-            st.sidebar.error("Error loading video: " + str(e))
-        
 def play_webcam(conf, model):
     
     #tracker = cv2.TrackerKCF_create()
@@ -118,9 +48,7 @@ def play_webcam(conf, model):
                 break
         
             results = model.track(source = frame, show = True, persist = True, tracker="bytetrack.yaml")
-            #res_plotted = results[0].plot()
-            # Display the frame in a window
-            #cv2.imshow('Camera Feed', res_plotted)
+
             webrtc_ctx.video_receiver.process_frame(results)
             
             # Break the loop if the 'q' key is pressed
