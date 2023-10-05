@@ -4,6 +4,8 @@ import numpy as np
 from ultralytics import YOLO
 from pathlib import Path
 import settings
+import av
+
 
 from streamlit_webrtc import WebRtcMode, webrtc_streamer
 
