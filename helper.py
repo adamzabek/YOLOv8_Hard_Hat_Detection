@@ -108,20 +108,24 @@ def play_webcam(conf, model):
         # Initialize the VideoCapture object for IP camera
         cap = cv2.VideoCapture(settings.WEBCAM_PATH)
 
-        # Read frame from IP camera
-        ret, frame = cap.read()            
-            
-        if ret:
-            detected_frame = model.track(source = frame, persist=True, tracker="bytetrack.yaml")
+        while True:
+            # Read a frame from the camera
+            ret, frame = cap.read()
 
-            # Display the result in Streamlit
-            webrtc_ctx.video_receiver.process_frame(detected_frame)
-            st.image(detected_frame, channels="BGR")           
-            
-            #if ret:
-            #    webrtc_ctx.video_receiver.process_frame(frame)
-            #    st.image(frame, channels="BGR")
-            
-        # Release the VideoCapture object and cleanup
+            # Check if the frame was read successfully
+            if not ret:
+                print("Error: Could not read frame.")
+                break
+        
+            results = model.track(source = frame, show = True, persist = True, tracker="bytetrack.yaml")
+            #res_plotted = results[0].plot()
+            # Display the frame in a window
+            #cv2.imshow('Camera Feed', res_plotted)
+
+            # Break the loop if the 'q' key is pressed
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        # Release the VideoCapture and close all OpenCV windows
         cap.release()
         cv2.destroyAllWindows()

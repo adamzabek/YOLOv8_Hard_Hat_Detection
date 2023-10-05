@@ -42,4 +42,4 @@ except Exception as ex:
     st.error(f"Unable to load model. Check the specified path: {model_path}.")
     st.error(ex)
     
-helper.webcam(confidence, model)
+helper.play_webcam(confidence, model)
