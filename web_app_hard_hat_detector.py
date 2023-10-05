@@ -24,6 +24,18 @@ st.set_page_config(
 )
 
 # Main page heading
+custom_css = """
+<style>
+h1 {
+    text-align: center;
+    margin-top: 50px; /* Adjust the margin to vertically center the title */
+}
+</style>
+"""
+
+# Use the custom CSS
+st.write(custom_css, unsafe_allow_html=True)
+
 st.title("Hard Hat Detector")
 
 # Sidebar
