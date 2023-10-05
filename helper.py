@@ -5,7 +5,6 @@ import cv2
 
 import settings
 
-
 def load_model(model_path):
     """
     Loads a YOLO object detection model from the specified model_path.
@@ -24,9 +23,9 @@ def display_tracker_options():
     display_tracker = st.radio("Display Tracker", ('Yes', 'No'))
     is_display_tracker = True if display_tracker == 'Yes' else False
     if is_display_tracker:
-        tracker_type = st.radio("Tracker", ("bytetrack.yaml", "botsort.yaml"))
+        tracker_type = bytetrack.yaml
         return is_display_tracker, tracker_type
-    return is_display_tracker, None
+    return is_display_tracker, tracker_type
 
 
 def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None, tracker=None):
@@ -99,49 +98,40 @@ def play_webcam(conf, model):
     except Exception as e:
         st.sidebar.error("Error loading video: " + str(e))
 
-"""
-def play_stored_video(conf, model):
+def webcam(conf, model):
     
-    Plays a stored video file. Tracks and detects objects in real-time using the YOLOv8 object detection model.
-
-    Parameters:
-        conf: Confidence of YOLOv8 model.
-        model: An instance of the `YOLOv8` class containing the YOLOv8 model.
-
-    Returns:
-        None
-
-    Raises:
-        None
-    
-    source_vid = st.sidebar.selectbox(
-        "Choose a video...", settings.VIDEOS_DICT.keys())
-
     is_display_tracker, tracker = display_tracker_options()
+    
+    webrtc_ctx = webrtc_streamer(
+        key="object_detection", 
+        video_processor_factory=None,
+        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+        media_stream_constraints={
+            "video": True,
+            "audio": False
+        }
+    )
 
-    with open(settings.VIDEOS_DICT.get(source_vid), 'rb') as video_file:
-        video_bytes = video_file.read()
-    if video_bytes:
-        st.video(video_bytes)
+    if webrtc_ctx.video_receiver:
+        # Initialize the VideoCapture object for IP camera
+        cap = cv2.VideoCapture(settings.WEBCAM_PATH)
 
-    if st.sidebar.button('Detect Video Objects'):
-        try:
-            vid_cap = cv2.VideoCapture(
-                str(settings.VIDEOS_DICT.get(source_vid)))
-            st_frame = st.empty()
-            while (vid_cap.isOpened()):
-                success, image = vid_cap.read()
-                if success:
-                    _display_detected_frames(conf,
-                                             model,
-                                             st_frame,
-                                             image,
-                                             is_display_tracker,
-                                             tracker
-                                             )
-                else:
-                    vid_cap.release()
-                    break
-        except Exception as e:
-            st.sidebar.error("Error loading video: " + str(e))
-"""            
+        while True:
+            # Read frame from IP camera
+            ret, frame = cap.read()
+
+            # Display the frame in Streamlit
+            if ret:
+                #webrtc_ctx.video_receiver.process_frame(frame)
+                #st.image(frame, channels="BGR")
+                _display_detected_frames(conf,
+                                         model,
+                                         st_frame,
+                                         frame,
+                                         is_display_detected_frames,
+                                         tracker,
+                                         )
+            
+        # Release the VideoCapture object and cleanup
+        cap.release()
+        cv2.destroyAllWindows()
