@@ -34,7 +34,6 @@ confidence = float(st.slider(
     
 # Load Pre-trained ML Model
 model_path = Path(settings.DETECTION_MODEL)
-#model_path = './model/best.pt'
 
 try:
     model = YOLO(model_path)
@@ -44,9 +43,3 @@ except Exception as ex:
     st.error(ex)
     
 helper.webcam(confidence, model)
-    
-#try:
-#    helper.webcam(confidence, model)
-#except Exception as ex:
-#    st.error(f"Unable to run webcamera.")
-#    st.error(ex)

@@ -37,13 +37,14 @@ def _display_detected_frames(conf, model, st_frame, image):
     """
 
     # Resize the image to a standard size
-    image = cv2.resize(image, (720, int(720*(9/16))))
+    #image = cv2.resize(image, (720, int(720*(9/16))))
 
     # Display object tracking, if specified
     res = model.track(image, conf=conf, persist=True, tracker="bytetrack.yaml")
 
-    # # Plot the detected objects on the video frame
+    # Plot the detected objects on the video frame
     res_plotted = res[0].plot()
+    webrtc_ctx.video_receiver.process_frame(res_plotted)
     st_frame.image(res_plotted,
                    caption='Detected Video',
                    channels="BGR",
@@ -115,7 +116,7 @@ def play_webcam(conf, model):
 
             # Display the result in Streamlit
             webrtc_ctx.video_receiver.process_frame(detected_frame)
-            st.image(detected_frame, channels="BGR")            
+            st.image(detected_frame, channels="BGR")           
             
             #if ret:
             #    webrtc_ctx.video_receiver.process_frame(frame)
