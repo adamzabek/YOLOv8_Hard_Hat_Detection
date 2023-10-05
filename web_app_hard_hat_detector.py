@@ -33,7 +33,8 @@ confidence = float(st.slider(
     "Select Model Confidence", 25, 100, 40)) / 100    
     
 # Load Pre-trained ML Model
-model_path = Path(settings.DETECTION_MODEL)
+#model_path = Path(settings.DETECTION_MODEL)
+model_path = './model/best.pt'
 
 try:
     model = helper.load_model(model_path)
